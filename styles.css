@@ -8,10 +8,11 @@ a { color: inherit; text-decoration: none; }
 
 /* Space behind the whole page, as tall as the page so it scrolls with it. The dust
    canvas covers all of it; sky.js moves the star canvas to wherever the screen is.
-   The star canvas is two screens tall with the mobile browser bars hidden (lvh), so
-   it still covers the screen while they slide away mid-scroll. */
+   Both reach at least the screen height with the mobile browser bars hidden (lvh),
+   and the star canvas is two such screens tall, so they still cover the screen
+   while the bars slide away mid-scroll, even on a page shorter than that. */
 body { position: relative; }
-.sky { position: absolute; inset: 0; z-index: 0; overflow: clip; pointer-events: none; }
+.sky { position: absolute; inset: 0; z-index: 0; min-height: 100vh; min-height: 100lvh; overflow: clip; pointer-events: none; }
 .sky canvas { position: absolute; top: 0; left: 0; width: 100%; display: block; }
 .sky .dust { height: 100%; }
 .sky .stars { height: 200vh; height: 200lvh; will-change: transform; }

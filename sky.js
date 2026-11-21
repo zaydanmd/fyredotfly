@@ -158,8 +158,9 @@ function syncStars() {
 
 // Rebuild when the window or the page height changes; when still, redraw on scroll.
 const rebuild = () => { if (buildStars()) syncStars(); };
-new ResizeObserver(rebuild).observe(sky);
-new ResizeObserver(rebuild).observe(starCanvas);
+const resized = new ResizeObserver(rebuild);
+resized.observe(sky);
+resized.observe(starCanvas);
 addEventListener("scroll", () => { if (!animating) drawStars(0); }, { passive: true });
 document.addEventListener("visibilitychange", syncStars);
 reduceMotion.addEventListener("change", syncStars);
