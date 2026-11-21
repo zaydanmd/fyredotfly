@@ -1,0 +1,5 @@
+# Cloudflare Pages response headers.
+# Files in assets/ never change under the same name, so browsers keep them for a year
+# without asking again. HTML, CSS and JS keep the Pages default and are revalidated on each visit.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
