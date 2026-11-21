@@ -19,7 +19,8 @@ let pageH = 0;
 
 function buildStars() {
   const { width, height } = starCanvas.getBoundingClientRect();
-  const fullH = document.documentElement.scrollHeight;
+  // at least the canvas height, so a short page still fills the whole canvas
+  const fullH = Math.max(document.documentElement.scrollHeight, height);
   if (!width || !height) return false;
   const dpr = Math.min(devicePixelRatio || 1, 2);
   starCanvas.width = Math.round(width * dpr);
