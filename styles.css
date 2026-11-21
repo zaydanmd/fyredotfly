@@ -6,11 +6,15 @@ html, body { margin: 0; background: #03040b; color: #f3f1ec; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 a { color: inherit; text-decoration: none; }
 
-/* Space behind the whole page. The canvas stays put, but sky.js draws the part of
-   the sky under the current scroll position, so the sky scrolls with the page.
-   It is as tall as the viewport with the mobile browser bars hidden (lvh), so it
-   still covers the screen while they slide away mid-scroll. */
-.sky { position: fixed; top: 0; left: 0; z-index: 0; width: 100%; height: 100vh; height: 100lvh; display: block; pointer-events: none; }
+/* Space behind the whole page, as tall as the page so it scrolls with it. The dust
+   canvas covers all of it; sky.js moves the star canvas to wherever the screen is.
+   The star canvas is two screens tall with the mobile browser bars hidden (lvh), so
+   it still covers the screen while they slide away mid-scroll. */
+body { position: relative; }
+.sky { position: absolute; inset: 0; z-index: 0; overflow: clip; pointer-events: none; }
+.sky canvas { position: absolute; top: 0; left: 0; width: 100%; display: block; }
+.sky .dust { height: 100%; }
+.sky .stars { height: 200vh; height: 200lvh; will-change: transform; }
 .hero, .below { position: relative; z-index: 1; }
 
 /* Top of the page: the reel fills the screen, dimmed and darkening downward. Only its
