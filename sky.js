@@ -1,37 +1,40 @@
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
 // The space behind the page: nebula clouds, a dust band and faint dust stars are
-// painted once into an offscreen canvas as tall as the whole page, and brighter stars
-// twinkle on top. The canvas on screen only draws the slice under the viewport, offset
-// by the scroll position, so the sky scrolls with the page. A fixed seed keeps the
-// layout identical on every visit.
-const starCanvas = document.querySelector(".sky");
+// painted once into a canvas as tall as the whole page, and brighter stars twinkle on
+// a second canvas on top. Both sit in the page and scroll with it, so the browser moves
+// them together with the content even when this script falls behind. The star canvas
+// is only two screens tall: each frame it moves to the part of the page around the
+// screen and redraws the stars there. A fixed seed keeps the layout identical on every
+// visit.
+const sky = document.querySelector(".sky");
+const dustCanvas = sky.querySelector(".dust");
+const starCanvas = sky.querySelector(".stars");
 const starCtx = starCanvas.getContext("2d");
 const WHITE = "255,255,255";
 const SPACE = "#03040b";
 const NEBULA = ["18,85,76", "38,90,48", "60,70,190", "120,60,180", "30,120,200"]; // teal and green kept dim
-const backdrop = document.createElement("canvas"); // whole-page sky at 1x; it is soft anyway
 let stars = [];
 let starFrame = 0;
 let animating = false;
-let pageW = 0;
 let pageH = 0;
+let bandH = 0;
+let bandTop = -1;
 
 function buildStars() {
-  const { width, height } = starCanvas.getBoundingClientRect();
-  // at least the canvas height, so a short page still fills the whole canvas
-  const fullH = Math.max(document.documentElement.scrollHeight, height);
-  if (!width || !height) return false;
+  const { width, height: fullH } = sky.getBoundingClientRect();
+  bandH = starCanvas.getBoundingClientRect().height;
+  if (!width || !fullH || !bandH) return false;
   const dpr = Math.min(devicePixelRatio || 1, 2);
   starCanvas.width = Math.round(width * dpr);
-  starCanvas.height = Math.round(height * dpr);
+  starCanvas.height = Math.round(bandH * dpr);
   starCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  pageW = width;
   pageH = fullH;
+  bandTop = -1;
 
   let seed = 1310; // Firefly's character ID
   const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
-  paintBackdrop(width, fullH, height, rand);
+  paintBackdrop(width, fullH, bandH / 2, rand);
   stars = Array.from({ length: Math.round((width * fullH) / 5200) }, () => {
     const bright = rand() < 0.07;
     return {
@@ -52,9 +55,9 @@ function buildStars() {
 }
 
 function paintBackdrop(width, height, screenH, rand) {
-  backdrop.width = Math.round(width);
-  backdrop.height = Math.round(height);
-  const g = backdrop.getContext("2d");
+  dustCanvas.width = Math.round(width); // 1x: it is soft anyway
+  dustCanvas.height = Math.round(height);
+  const g = dustCanvas.getContext("2d");
   g.fillStyle = SPACE;
   g.fillRect(0, 0, width, height);
   const big = Math.max(width, screenH);
@@ -111,13 +114,18 @@ function paintBackdrop(width, height, screenH, rand) {
 }
 
 function drawStars(time) {
-  const { width, height } = starCanvas.getBoundingClientRect();
-  const top = Math.min(scrollY, Math.max(0, pageH - height));
-  starCtx.drawImage(backdrop, 0, top, pageW, height, 0, 0, width, height);
+  // Centre the star canvas on the screen, leaving half a screen above and below for
+  // the browser to scroll into before this script catches up.
+  const top = Math.round(Math.max(0, Math.min(scrollY - bandH / 4, pageH - bandH)));
+  if (top !== bandTop) {
+    bandTop = top;
+    starCanvas.style.transform = `translateY(${top}px)`;
+  }
+  starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
   const t = time / 1000;
   for (const s of stars) {
     const y = s.y - top;
-    if (y < -20 || y > height + 20) continue;
+    if (y < -20 || y > bandH + 20) continue;
     const flicker = 0.55 + 0.25 * Math.sin(t * s.f1 + s.p1) + 0.2 * Math.sin(t * s.f2 + s.p2);
     const a = s.alpha * flicker;
     if (s.glow) {
@@ -150,8 +158,9 @@ function syncStars() {
 
 // Rebuild when the window or the page height changes; when still, redraw on scroll.
 const rebuild = () => { if (buildStars()) syncStars(); };
-new ResizeObserver(rebuild).observe(starCanvas);
-new ResizeObserver(rebuild).observe(document.body);
+const resized = new ResizeObserver(rebuild);
+resized.observe(sky);
+resized.observe(starCanvas);
 addEventListener("scroll", () => { if (!animating) drawStars(0); }, { passive: true });
 document.addEventListener("visibilitychange", syncStars);
 reduceMotion.addEventListener("change", syncStars);
