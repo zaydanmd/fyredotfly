@@ -90,10 +90,11 @@ body { position: relative; }
 .e2 { width: 36vw;             left: -4vw; top: 14%; --t: 12s;   --delay: -7s;  --dx: -28px; --dy: -68px; --r0: 4deg;  --r1: -5deg; }
 .e3 { width: min(26vw, 720px); right: 4%; top: 30%; --t: 8s;    --delay: -4s;  --dx: 20px;  --dy: -48px; --r0: 6deg;  --r1: -4deg; }
 .e6 { width: 24vw;             left: 38%; top: 68%; --t: 10s; --delay: -8s;  --dx: -24px; --dy: -56px; --r0: -4deg; --r1: 5deg; }
-/* The two Firefly figures drift slower and without tilting. The right one hangs off the
-   right edge, which also hides the bit of Caelus's coat on that side of her cutout. */
-.f1 { width: min(44vw, 900px); left: -6vw; top: 58%; --t: 13s; --delay: -5s; --dx: 14px;  --dy: -28px; }
-.f2 { width: min(42vw, 860px); right: 0; bottom: 2%; translate: 42% 0; --t: 14s; --delay: -9s; --dx: -14px; --dy: -28px; }
+/* The two Firefly figures stay still. The right one hangs off the right edge, which
+   also hides the bit of Caelus's coat on that side of her cutout. */
+.f1, .f2 { animation: none; will-change: auto; }
+.f1 { width: min(44vw, 900px); left: -6vw; top: 58%; }
+.f2 { width: min(42vw, 860px); right: 0; bottom: 2%; translate: 42% 0; }
 @keyframes float {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r0, 0deg)); }
   50% { transform: translate3d(var(--dx, 0px), var(--dy, -12px), 0) rotate(var(--r1, 0deg)); }
