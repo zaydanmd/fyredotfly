@@ -90,8 +90,8 @@ body { position: relative; }
 .e6 { width: 24vw;             left: 38%; top: 68%; --t: 10s; --delay: -8s;  --dx: -24px; --dy: -56px; --r0: -4deg; --r1: 5deg; }
 /* The two Firefly figures drift slower and without tilting. The right one hangs off the
    right edge, which also hides the bit of Caelus's coat on that side of her cutout. */
-.f1 { width: min(44vw, 900px); left: -6vw; top: 44%; --t: 13s; --delay: -5s; --dx: 14px;  --dy: -28px; }
-.f2 { width: min(42vw, 860px); right: 0; top: 62%; translate: 42% 0; --t: 14s; --delay: -9s; --dx: -14px; --dy: -28px; }
+.f1 { width: min(44vw, 900px); left: -6vw; top: 58%; --t: 13s; --delay: -5s; --dx: 14px;  --dy: -28px; }
+.f2 { width: min(42vw, 860px); right: 0; bottom: 2%; translate: 42% 0; --t: 14s; --delay: -9s; --dx: -14px; --dy: -28px; }
 @keyframes float {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r0, 0deg)); }
   50% { transform: translate3d(var(--dx, 0px), var(--dy, -12px), 0) rotate(var(--r1, 0deg)); }
@@ -162,7 +162,7 @@ body { position: relative; }
   .f1 { grid-column: 1 / -1; grid-row: 2; width: 100vw; margin-left: -12vw; }
   .e3 { grid-column: 2; grid-row: 3; width: 60vw; margin-top: 6svh; margin-left: -14vw; }
   .e6 { grid-column: 1; grid-row: 3; width: 62vw; margin-top: 18svh; margin-left: -8vw; }
-  .f2 { grid-column: 1 / -1; grid-row: 4; width: 100vw; translate: 42% 0; }
+  .f2 { grid-column: 1 / -1; grid-row: 4; width: 100vw; }
   .colophon { padding-top: 10svh; font-size: 10px; }
 }
 
