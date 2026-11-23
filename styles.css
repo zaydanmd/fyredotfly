@@ -21,6 +21,9 @@ body { position: relative; }
 /* Top of the page: the reel fills the screen, dimmed and darkening downward. Only its
    bottom part fades out, through a mask, so the sky shows there and nowhere else. */
 .hero { height: 100svh; min-height: 480px; overflow: hidden; }
+/* Two eidolon cards float over the reel, one on each side. */
+.h1 { width: min(24vw, 440px); left: 5vw; bottom: 2svh;   --t: 10s; --delay: -3s; --dx: 18px;  --dy: -40px; --r0: -5deg; --r1: 3deg; }
+.h2 { width: min(20vw, 360px); right: 6vw; top: 16svh;    --t: 9s;  --delay: -6s; --dx: -16px; --dy: -36px; --r0: 4deg;  --r1: -3deg; }
 .stage {
   position: absolute; inset: 0;
   --dim: 0.3; /* darkens the whole video */
@@ -84,9 +87,11 @@ body { position: relative; }
 .e1 { width: min(22vw, 720px); left: 58%; top: 3%;  --t: 9s;    --delay: -2s;  --dx: 24px;  --dy: -56px; --r0: -6deg; --r1: 4deg; }
 .e2 { width: 36vw;             left: -4vw; top: 14%; --t: 12s;   --delay: -7s;  --dx: -28px; --dy: -68px; --r0: 4deg;  --r1: -5deg; }
 .e3 { width: min(26vw, 720px); right: 4%; top: 30%; --t: 8s;    --delay: -4s;  --dx: 20px;  --dy: -48px; --r0: 6deg;  --r1: -4deg; }
-.e4 { width: min(16vw, 720px); left: 44%; top: 44%; --t: 7s;    --delay: -1s;  --dx: -18px;  --dy: -44px; --r0: -4deg; --r1: 6deg; }
-.e5 { width: min(30vw, 720px); left: 8%;  top: 58%; --t: 11s;   --delay: -5s;  --dx: 26px;  --dy: -60px; --r0: 5deg; --r1: -4deg; }
-.e6 { width: 24vw;             right: -3vw; top: 72%; --t: 10s; --delay: -8s;  --dx: -24px; --dy: -56px; --r0: -4deg; --r1: 5deg; }
+.e6 { width: 24vw;             left: 38%; top: 68%; --t: 10s; --delay: -8s;  --dx: -24px; --dy: -56px; --r0: -4deg; --r1: 5deg; }
+/* The two Firefly figures drift slower and without tilting. The right one hangs off the
+   right edge, which also hides the bit of Caelus's coat on that side of her cutout. */
+.f1 { width: min(44vw, 900px); left: -6vw; top: 44%; --t: 13s; --delay: -5s; --dx: 14px;  --dy: -28px; }
+.f2 { width: min(42vw, 860px); right: 0; top: 62%; translate: 42% 0; --t: 14s; --delay: -9s; --dx: -14px; --dy: -28px; }
 @keyframes float {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r0, 0deg)); }
   50% { transform: translate3d(var(--dx, 0px), var(--dy, -12px), 0) rotate(var(--r1, 0deg)); }
@@ -140,6 +145,8 @@ body { position: relative; }
   .name { font-size: 18px; }
   .links a { font-size: 11px; }
   .links { gap: 14px; }
+  .h1 { width: 52vw; left: -4vw; bottom: 4svh; }
+  .h2 { width: 44vw; right: -2vw; top: 14svh; }
   .eidolons {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -149,13 +156,13 @@ body { position: relative; }
     min-height: 0;
     padding: 10svh 0 14svh;
   }
-  .eidolon { position: relative; inset: auto; height: auto; }
+  .eidolons .eidolon { position: relative; inset: auto; height: auto; }
   .e1 { grid-column: 2; grid-row: 1; width: 48vw; margin-left: -2vw; }
   .e2 { grid-column: 1; grid-row: 1; width: 70vw; margin-top: 14svh; margin-left: -10vw; }
-  .e3 { grid-column: 2; grid-row: 2; width: 60vw; margin-top: 6svh; margin-left: -14vw; }
-  .e4 { grid-column: 1; grid-row: 2; width: 44vw; margin-left: 6vw; }
-  .e5 { grid-column: 1; grid-row: 3; width: 58vw; margin-top: 4svh; margin-left: -4vw; }
-  .e6 { grid-column: 2; grid-row: 3; width: 62vw; margin-top: 24svh; margin-left: -8vw; }
+  .f1 { grid-column: 1 / -1; grid-row: 2; width: 100vw; margin-left: -12vw; }
+  .e3 { grid-column: 2; grid-row: 3; width: 60vw; margin-top: 6svh; margin-left: -14vw; }
+  .e6 { grid-column: 1; grid-row: 3; width: 62vw; margin-top: 18svh; margin-left: -8vw; }
+  .f2 { grid-column: 1 / -1; grid-row: 4; width: 100vw; translate: 42% 0; }
   .colophon { padding-top: 10svh; font-size: 10px; }
 }
 
