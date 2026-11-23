@@ -75,7 +75,9 @@ body { position: relative; }
 .eidolons {
   position: relative;
   height: 230svh;
-  min-height: 1400px;
+  /* The art is sized by width, so on wide, short screens the section grows with the
+     width too; otherwise the Firefly figures get cut off or run into the cards. */
+  min-height: max(1400px, 104vw);
   overflow: hidden;
 }
 .eidolon {
@@ -161,7 +163,7 @@ body { position: relative; }
   .e2 { grid-column: 1; grid-row: 1; width: 70vw; margin-top: 14svh; margin-left: -10vw; }
   .f1 { grid-column: 1 / -1; grid-row: 2; width: 100vw; margin-left: -12vw; }
   .e3 { grid-column: 2; grid-row: 3; width: 60vw; margin-top: 6svh; margin-left: -14vw; }
-  .e6 { grid-column: 1; grid-row: 3; width: 62vw; margin-top: 18svh; margin-left: -8vw; }
+  .e6 { grid-column: 1; grid-row: 3; width: 62vw; margin-top: 65vw; margin-left: -8vw; }
   .f2 { grid-column: 1 / -1; grid-row: 4; width: 100vw; }
   .colophon { padding-top: 10svh; font-size: 10px; }
 }
