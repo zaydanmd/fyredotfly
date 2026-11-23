@@ -22,8 +22,8 @@ body { position: relative; }
    bottom part fades out, through a mask, so the sky shows there and nowhere else. */
 .hero { height: 100svh; min-height: 480px; overflow: hidden; }
 /* Two eidolon cards float over the reel, one on each side. */
-.h1 { width: min(24vw, 440px); left: 5vw; bottom: 2svh;   --t: 10s; --delay: -3s; --dx: 18px;  --dy: -40px; --r0: -5deg; --r1: 3deg; }
-.h2 { width: min(20vw, 360px); right: 6vw; top: 16svh;    --t: 9s;  --delay: -6s; --dx: -16px; --dy: -36px; --r0: 4deg;  --r1: -3deg; }
+.h1 { width: min(24vw, 440px, 60svh); left: 5vw; bottom: 2svh;   --t: 10s; --delay: -3s; --dx: 18px;  --dy: -40px; --r0: -5deg; --r1: 3deg; }
+.h2 { width: min(20vw, 360px, 50svh); right: 6vw; top: 16svh;    --t: 9s;  --delay: -6s; --dx: -16px; --dy: -36px; --r0: 4deg;  --r1: -3deg; }
 .stage {
   position: absolute; inset: 0;
   --dim: 0.3; /* darkens the whole video */
